@@ -30,6 +30,11 @@ namespace Jellyfin.Plugin.Bookshelf
                 {
                     Name = Name,
                     EmbeddedResourcePath = GetType().Namespace + ".Configuration.configPage.html"
+                },
+                new PluginPageInfo
+                {
+                    Name = Name,
+                    EmbeddedResourcePath = GetType().Namespace + ".Configuration.comicvine.js"
                 }
             };
         }

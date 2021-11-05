@@ -1,15 +1,21 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <title>Bookshelf</title>
 </head>
+
 <body>
     <div id="bookshelfConfigurationPage" data-role="page" class="page type-interior pluginConfigurationPage">
         <div data-role="content">
             <div class="content-primary">
                 <h1>Bookshelf</h1>
-                <p>To set up Bookshelf, just add a media library in the server configuration and set the content type to books. This plugin supports standard OPF as well as Calibre OPF if you'd like to import the metadata from another program. ComicInfo XML files are also supported but the ComicVine provider is not yet functional. If you want to see support for a specific provider we always welcome code contributions!</p>
-                <h1>Supported Formats</h1>
+                <p>To set up Bookshelf, just add a media library in the server configuration and set the content type to
+                    books. This plugin supports standard OPF as well as Calibre OPF if you'd like to import the metadata
+                    from another program. ComicInfo XML files are also supported but the ComicVine provider is not yet
+                    functional. If you want to see support for a specific provider we always welcome code contributions!
+                </p>
+                <h2>Supported Formats</h2>
                 <ul>
                     <li>epub</li>
                     <li>mobi</li>
@@ -17,8 +23,26 @@
                     <li>cbz</li>
                     <li>cbr</li>
                 </ul>
+                <h2>ComicVine</h2>
+                <p>In order to import metadata from ComicVine, you need to enter your ComicVine API key below:</p>
+                <form id="ComicVineConfigForm">
+                    <div class="inputContainer">
+                        <input is="emby-input" type="text" id="comicvineapikey" label="${LabelComicVineApiKey}" />
+                        <div class="fieldDescription">
+                            <a is="emby-linkbutton" class="button-link" target="_blank"
+                                href="https://comicvine.gamespot.com/">Register</a>
+                        </div>
+                    </div>
+                    <div class="fieldDescription" id="comicvineresponse"></div>
+                    <div>
+                        <button is="emby-button" type="submit" class="raised button-submit block">
+                            <span>${Save}</span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </body>
+
 </html>
