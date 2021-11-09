@@ -28,8 +28,13 @@ namespace Jellyfin.Plugin.Bookshelf
             {
                 new PluginPageInfo
                 {
-                    Name = Name,
-                    EmbeddedResourcePath = GetType().Namespace + ".Configuration.configPage.html"
+                    Name = "bookshelf",
+                    EmbeddedResourcePath = GetType().Namespace + ".Web.bookshelf.html",
+                },
+                new PluginPageInfo
+                {
+                    Name = "bookshelfjs",
+                    EmbeddedResourcePath = GetType().Namespace + ".Web.bookshelf.js"
                 }
             };
         }
