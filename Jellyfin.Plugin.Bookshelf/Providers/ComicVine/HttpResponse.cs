@@ -1,4 +1,5 @@
 using System.Net;
+using System.Xml.Linq;
 
 namespace Jellyfin.Plugin.Bookshelf.Providers.ComicVine
 {
@@ -22,7 +23,7 @@ namespace Jellyfin.Plugin.Bookshelf.Providers.ComicVine
         /// <summary>
         /// Gets the response body.
         /// </summary>
-        public string Body { get; init; } = string.Empty;
+        public XDocument Body { get; init; }
 
         /// <summary>
         /// Gets the response fail reason.

@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 #nullable enable
 namespace Jellyfin.Plugin.Bookshelf.Providers.ComicVine
@@ -48,9 +49,10 @@ namespace Jellyfin.Plugin.Bookshelf.Providers.ComicVine
 
             var client = _clientFactory.CreateClient("Default");
             var result = await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
-            var resultBody = await result.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+            var resultBody = await result.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+            var resultXml = await XDocument.LoadAsync(resultBody, LoadOptions.None, cancellationToken);
 
-            return new HttpResponse { Body = resultBody, Code = result.StatusCode };
+            return new HttpResponse { Body = resultXml, Code = result.StatusCode };
         }
     }
 }
