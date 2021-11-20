@@ -16,6 +16,8 @@ using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.Providers;
 using Microsoft.Extensions.Logging;
 
+using Jellyfin.Plugin.Bookshelf.Configuration;
+
 #nullable enable
 namespace Jellyfin.Plugin.Bookshelf.Providers.ComicVine
 {
@@ -23,6 +25,8 @@ namespace Jellyfin.Plugin.Bookshelf.Providers.ComicVine
     {
         private IHttpClientFactory _httpClientFactory;
         private ILogger<ComicVineProvider> _logger;
+
+        private string _apiKey;
 
         public string Name => "ComicVine Provider";
 
@@ -34,6 +38,13 @@ namespace Jellyfin.Plugin.Bookshelf.Providers.ComicVine
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version!.ToString();
 
             ComicVineRequestHandler.Instance = new ComicVineRequestHandler(httpClientFactory, version);
+
+            Plugin.Instance!.ConfigurationChanged += (_, _) =>
+            {
+                _apiKey = GetOptions().ApiKey;
+            };
+
+            _apiKey = GetOptions().ApiKey;
         }
 
         public async Task<IEnumerable<RemoteSearchResult>> GetSearchResults(BookInfo item, CancellationToken cancellationToken)
@@ -50,6 +61,8 @@ namespace Jellyfin.Plugin.Bookshelf.Providers.ComicVine
         {
             throw new NotImplementedException("Not yet implemented");
         }
+
+        private PluginConfiguration GetOptions() => Plugin.Instance!.Configuration;
     }
 }
 

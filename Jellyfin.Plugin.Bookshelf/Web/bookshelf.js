@@ -24,14 +24,14 @@ export default function (view, params) {
                 return;
             }
 
-            const el = form.querySelector('#ossresponse');
+            const el = form.querySelector('#comicvineresponse');
 
             const data = JSON.stringify({ ApiKey: apiKey });
             const url = ApiClient.getUrl('Jellyfin.Plugin.Bookshelf/ValidateComicVineApiKey');
 
             const handler = response => response.json().then(res => {
                 if (response.ok) {
-                    el.innerText = `Login info validated, this account can download ${res.Downloads} subtitles per hour`;
+                    el.innerText = `Login info validated.`;
 
                     config.ApiKey = apiKey;
 
