@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.Net.Http.Headers;
 
 #nullable enable
 namespace Jellyfin.Plugin.Bookshelf.Providers.ComicVine
@@ -38,16 +39,14 @@ namespace Jellyfin.Plugin.Bookshelf.Providers.ComicVine
                 throw new ArgumentException("Provided API key is blank", nameof(apiKey));
             }
 
-            // for reference, the full url:
-            //https://comicvine.gamespot.com/api/issue/1/?api_key=t&format=json&field_list=name
             var client = _clientFactory.CreateClient("Default");
+            client.DefaultRequestHeaders.Remove(HeaderNames.UserAgent);
+            client.DefaultRequestHeaders.Add(HeaderNames.UserAgent, "Jellyfin-Plugin-Bookshelf" + _version);
+
             var result = await client.GetAsync(API_BASE_URL + "/issue/1/?api_key=" + apiKey + "&format=json&field_list=name").ConfigureAwait(false);
+            var body = await result.Content.ReadAsStringAsync();
 
-            // Todo: change to json
-            var resultBody = await result.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
-            var resultXml = await XDocument.LoadAsync(resultBody, LoadOptions.None, cancellationToken);
-
-            return new HttpResponse { Body = resultXml, Code = result.StatusCode };
+            return null;
         }
     }
 }
